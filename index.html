@@ -100,8 +100,7 @@ title: "Diego Febles Seoane — CV & Repos"
 </div>
 
 <script>
-  const GITHUB_USERNAME = "diego-febles-seoane";
-  const GITHUB_TOKEN = "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";
+  const GITHUB_USERNAME = "diego-febles-seoane"; // <- CAMBIA ESTO
   const FEATURED_TOPIC = "showcase";
   let allRepos = [];
   let activeTopic = "all";
@@ -116,12 +115,7 @@ title: "Diego Febles Seoane — CV & Repos"
 
   async function fetchRepos() {
     const url = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
-    const res = await fetch(url, {
-      headers: {
-        "Accept": "application/vnd.github+json",
-        "Authorization": `Bearer ${GITHUB_TOKEN}`
-      }
-    });
+    const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
     if (!res.ok) throw new Error("No se pudo leer la API de GitHub. Revisa tu usuario.");
     const repos = await res.json();
     return repos.map(r => ({
