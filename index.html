@@ -23,11 +23,7 @@ title: "Diego Febles Seoane — CV & Repos"
         <img src="assets/img/perfil.jpeg" alt="Foto de perfil">
         <div class="bio">
           <p class="muted" style="margin:0">
-            Estoy formándome como desarrollador multiplataforma, con especial foco en Java y el desarrollo de
-            aplicaciones con bases de datos. Me motiva construir proyectos desde cero, cuidando cada detalle tanto en la
-            lógica como en el diseño visual. No me conformo con que algo simplemente funcione: quiero que además tenga
-            identidad propia. Actualmente busco seguir creciendo en backend y frontend, así como potenciar mis
-            habilidades en diseño 3D, mientras continúo explorando el equilibrio entre programación y creatividad.
+            Estoy formándome como desarrollador multiplataforma, con especial foco en Java y el desarrollo de aplicaciones con bases de datos. Me motiva construir proyectos desde cero, cuidando cada detalle tanto en la lógica como en el diseño visual. No me conformo con que algo simplemente funcione: quiero que además tenga identidad propia. Actualmente busco seguir creciendo en backend y frontend, así como potenciar mis habilidades en diseño 3D, mientras continúo explorando el equilibrio entre programación y creatividad.
           </p>
           <div class="pillrow">
             <span class="pill">Java</span>
@@ -50,34 +46,32 @@ title: "Diego Febles Seoane — CV & Repos"
 
         <h3 style="margin:16px 0 10px">Objetivo</h3>
         <p class="muted" style="margin:0">
-          Actualmente busco practicas para mejorar mi conocimiento en toda clase de sectores, sin preferencia ninguna,
-          porque todo aquello que aprenda hoy me servira para el mañana.
+          Actualmente busco practicas para mejorar mi conocimiento en toda clase de sectores, sin preferencia ninguna, porque todo aquello que aprenda hoy me servira para el mañana.
         </p>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <h2>Legend's Fakemon</h2>
-    <div class="profile">
-      <img src="assets/img/pack.png" alt="Foto de perfil">
-
-      <div class="bio">
-        <p class="muted" style="margin:0">
-          Datapack de contenido para Cobblemon(mod de Minecraft), agrega nuevas criaturas para el mod mediante el uso
-          de json y de modelaje 3D.
-          Hecho de manera individual por mi.
-        </p>
-        <div class="pillrow">
-          <span class="pill">Json</span>
-          <span class="pill">JavaScript</span>
-          <span class="pill">Blockbench</span>
-          <a href="https://modrinth.com/datapack/legends-fakemon" class="pill pill-link" target="_blank">
-            Ver proyecto
-          </a>
+    <h2>Sobre mí</h2>
+    <div class="grid2">
+      <div class="profile">
+        <img src="assets/img/pack.png" alt="Foto de perfil">
+        <div class="bio">
+          <p class="muted" style="margin:0">
+            <h1>Legend's Fakemon</h1>
+            <p class="muted" style="margin:0">
+              Datapack de contenido para Cobblemon(mod de Minecraft), agrega nuevas criaturas para el mod mediante el uso de json y de modelaje 3D. 
+              Hecho de manera individual por mi.
+            </p>
+          </p>
+          <div class="pillrow">
+            <span class="pill">Json</span>
+            <span class="pill">JavaScript</span>
+            <span class="pill">Blockbench</span>
+          </div>
         </div>
       </div>
-    </div>
   </section>
 
   <section class="section">
@@ -114,18 +108,18 @@ title: "Diego Febles Seoane — CV & Repos"
   let allRepos = [];
   let activeTopic = "all";
 
-  function formatDate(iso) {
+  function formatDate(iso){
     const d = new Date(iso);
-    return d.toLocaleDateString("es-ES", { year: "numeric", month: "short", day: "2-digit" });
+    return d.toLocaleDateString("es-ES", {year:"numeric", month:"short", day:"2-digit"});
   }
-  function cardBorderByIndex(i) {
-    return ["border-blue", "border-violet", "border-emerald"][i % 3];
+  function cardBorderByIndex(i){
+    return ["border-blue","border-violet","border-emerald"][i % 3];
   }
 
-  async function fetchRepos() {
+  async function fetchRepos(){
     const url = `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated`;
-    const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
-    if (!res.ok) throw new Error("No se pudo leer la API de GitHub. Revisa tu usuario.");
+    const res = await fetch(url, { headers: { "Accept":"application/vnd.github+json" }});
+    if(!res.ok) throw new Error("No se pudo leer la API de GitHub. Revisa tu usuario.");
     const repos = await res.json();
     return repos.map(r => ({
       name: r.name,
@@ -138,7 +132,7 @@ title: "Diego Febles Seoane — CV & Repos"
     }));
   }
 
-  function renderFeatured(repos) {
+  function renderFeatured(repos){
     const featured = repos.filter(r => r.topics.includes(FEATURED_TOPIC)).slice(0, 6);
     const el = document.getElementById("featured");
     el.innerHTML = featured.length ? "" : `<div class="muted">Aún no tienes repos con topic <b>${FEATURED_TOPIC}</b>.</div>`;
@@ -164,23 +158,23 @@ title: "Diego Febles Seoane — CV & Repos"
     });
   }
 
-  function applyFilters(repos) {
+  function applyFilters(repos){
     const q = (document.getElementById("q").value || "").toLowerCase();
     const sort = document.getElementById("sort").value;
 
     let out = repos.filter(r => {
-      const matchesText = r.name.toLowerCase().includes(q) || (r.description || "").toLowerCase().includes(q);
+      const matchesText = r.name.toLowerCase().includes(q) || (r.description||"").toLowerCase().includes(q);
       const matchesTopic = activeTopic === "all" ? true : r.topics.includes(activeTopic);
       return matchesText && matchesTopic;
     });
 
-    if (sort === "updated") out.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-    if (sort === "stars") out.sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0));
-    if (sort === "name") out.sort((a, b) => a.name.localeCompare(b.name));
+    if (sort === "updated") out.sort((a,b) => new Date(b.updated_at) - new Date(a.updated_at));
+    if (sort === "stars") out.sort((a,b) => (b.stargazers_count||0) - (a.stargazers_count||0));
+    if (sort === "name") out.sort((a,b) => a.name.localeCompare(b.name));
     return out;
   }
 
-  function renderRepos(repos) {
+  function renderRepos(repos){
     const el = document.getElementById("repos");
     const list = applyFilters(repos);
     el.innerHTML = list.length ? "" : `<div class="muted">No hay resultados con esos filtros.</div>`;
@@ -206,7 +200,7 @@ title: "Diego Febles Seoane — CV & Repos"
     });
   }
 
-  function bindUI() {
+  function bindUI(){
     document.getElementById("q").addEventListener("input", () => renderRepos(allRepos));
     document.getElementById("sort").addEventListener("change", () => renderRepos(allRepos));
     document.querySelectorAll(".btn[data-topic]").forEach(btn => {
@@ -219,7 +213,7 @@ title: "Diego Febles Seoane — CV & Repos"
     });
   }
 
-  async function main() {
+  async function main(){
     bindUI();
     allRepos = await fetchRepos();
     renderFeatured(allRepos);
